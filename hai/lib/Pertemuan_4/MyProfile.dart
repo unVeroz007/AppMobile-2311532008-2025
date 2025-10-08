@@ -1,27 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:hai/Pertemuan_4/MyNav.dart';
-import 'package:hai/main.dart';
-import 'package:hai/tugas2.dart';
 
-void main() => runApp(const MyProfile(id: null,, name: '',));
+void main() => runApp(MyNav());
 
-class MyProfile extends StatelessWidget{
-  final int id;
-  final String name;
-  const MyProfile({super.key, required this.id, required this.name});
+class MyNav extends StatelessWidget {
+  const MyNav({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/product': (context) => const MyProduct(),
+      },
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-      ),
+      appBar: AppBar(title: const Text('Home Page')),
       body: Center(
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('ID: $id'),
-            Text('Name: $name'),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyProfile(id: 1, name: 'Galid'),
+                  ),
+                );
+              },
+              child: const Text('Profile'),
+            ),
+            const SizedBox(width: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/product',
+                  arguments: {'id': 101, 'name': 'Laptop'},
+                );
+              },
+              child: const Text('Product'),
+            ),
           ],
         ),
       ),
@@ -29,31 +57,42 @@ class MyProfile extends StatelessWidget{
   }
 }
 
-class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+class MyProfile extends StatelessWidget {
+  final int id;
+  final String name;
+  const MyProfile({super.key, required this.id, required this.name});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-      ),
+      appBar: AppBar(title: const Text('Profile')),
       body: Center(
-        child: ElevatedButton(
-          onPressed:(){
-            Navigator.push(
-              context, 
-              MaterialPageRoute(
-                builder: (context) => const MyProfile(id: 1, name: 'Galid'),
-             ),
-            );
-          }, child:Text('Profile'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text('ID: $id'), Text('Name: $name')],
         ),
       ),
     );
   }
 }
 
+class MyProduct extends StatelessWidget {
+  const MyProduct({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Map?;
+    final int id = args?['id'] ?? 0;
+    final String name = args?['name'] ?? 'Unknown';
 
-
+    return Scaffold(
+      appBar: AppBar(title: const Text('Product')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text('Product ID: $id'), Text('Product Name: $name')],
+        ),
+      ),
+    );
+  }
+}
