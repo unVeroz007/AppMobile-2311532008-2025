@@ -23,20 +23,20 @@ class _EditTodoState extends State<EditTodo> {
     _dateController.text = widget.todo['date'];
   }
 
-  void _submit() async { // Tambahkan async di sini
+  void _submit() async {
     final title = _titleController.text;
     final content = _contentController.text;
     final date = _dateController.text;
 
     final todoDao = TodoDAO();
-    await todoDao.updateTodo(widget.todo['id'], { // Tambahkan await di sini
+    await todoDao.updateTodo(widget.todo['id'], {
       'title': title,
       'content': content,
       'date': date,
     });
 
     if (!mounted) return;
-    Navigator.pop(context, true); // Mengembalikan nilai true untuk refresh
+    Navigator.pop(context, true);
   }
 
   @override

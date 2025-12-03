@@ -94,7 +94,7 @@ class _TodoState extends State<Todo> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => EditTodo(todo: todos[index]), // Pastikan parameter todo
+                                    builder: (context) => EditTodo(todo: todos[index]),
                                   ),
                                 ).then((value) {
                                   if (value == true) { // Jika kembali dengan nilai true
